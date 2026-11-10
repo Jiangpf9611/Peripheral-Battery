@@ -17,7 +17,7 @@
 
 ## 使用方法
 
-1. 从本仓库的 GitHub Releases 下载 `PeriBatt.exe`（维护者发布后可用），或按下文从源码构建。
+1. 从 [V2.3.0 发布页](https://github.com/Jiangpf9611/Peripheral-Battery/releases/tag/v2.3.0) 下载 [PeriBatt.exe](https://github.com/Jiangpf9611/Peripheral-Battery/releases/download/v2.3.0/PeriBatt.exe)，或按下文从源码构建。
 2. 将程序放在固定位置，双击打开；等待本轮检测完成。
 3. 接入、唤醒或切换设备后，点击右上角刷新按钮重新检测。
 4. 按需开启“开机自启”，它会在当前用户登录时正常打开窗口。移动 EXE 后，请重新设置自启路径。
