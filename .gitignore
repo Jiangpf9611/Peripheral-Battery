@@ -1,0 +1,21 @@
+# Local build outputs
+/dist/
+/releases/
+**/bin/
+**/obj/
+/tools/*.exe
+/docs/test-artifacts/
+# Local IDE and Python caches
+.vs/
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+.venv/
+# Local diagnostics and device data
+*.dmp
+*.log
+*-diagnose*.txt
+devices.tsv
+.env
+.env.*
