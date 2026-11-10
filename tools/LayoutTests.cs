@@ -17,6 +17,17 @@ class LayoutTests {
  [STAThread]static void Main(string[] args){try{Run(args);}catch(Exception e){Console.WriteLine(e.GetType().Name+": "+e.Message);Environment.ExitCode=1;}}
  static void Run(string[] args){Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
  if(args.Length>0){var f=new FixtureWindow();f.Text="PeriBatt 布局测试 · 模拟数据";f.Show();f.ApplySnapshot(Samples(int.Parse(args[0])));Application.Run(f);return;}
+ using(var startup=new FixtureWindow()){
+ startup.Show();var area=Screen.FromHandle(startup.Handle).WorkingArea;
+ Check(startup.Left==area.Left+(area.Width-startup.Width)/2&&startup.Top==area.Top+(area.Height-startup.Height)/2,"loading window centered");
+ startup.ApplySnapshot(Samples(3));Application.DoEvents();
+ Check(startup.Left==area.Left+(area.Width-startup.Width)/2&&startup.Top==area.Top+(area.Height-startup.Height)/2,"first snapshot centered");
+ var moved=new Point(area.Left+30,area.Top+30);startup.Location=moved;startup.ApplySnapshot(Samples(2));Check(startup.Location==moved,"refresh preserves location");startup.Close();}
+ using(var row=new DeviceRow(Samples(1)[0])){
+ var flags=BindingFlags.Instance|BindingFlags.NonPublic;
+ Check((float)typeof(DeviceRow).GetField("shownPercent",flags).GetValue(row)==20,"initial bar value");
+ Check((float)typeof(DeviceRow).GetField("fromPercent",flags).GetValue(row)==20,"initial animation origin");
+ Check(!((System.Windows.Forms.Timer)typeof(DeviceRow).GetField("pulse",flags).GetValue(row)).Enabled,"no initial transition timer");}
  foreach(float scale in new[]{1f,1.25f,1.5f,1.75f})using(var f=new FixtureWindow()){
  f.Show();f.RecreateForTest();FrameCheck(f);foreach(int msg in new[]{0x86,0x31e,0x320,0x1a}){SendMessage(f.Handle,msg,new IntPtr(1),IntPtr.Zero);FrameCheck(f);}
  typeof(MainWindow).GetField("scale",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(f,scale);
